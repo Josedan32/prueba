@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Usuarios</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <link rel="stylesheet" href="/public/css/registerstyle.css">
+  <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+
+</head>
+
+<body class="flex items-center justify-center w-screen h-screen p-10 space-x-6 bg-gray-300">
+  <nav>
+    <div class="logo">
+      <i class="bx bx-menu menu-icon"></i>
+      <span class="logo-name">Enterprise Jose</span>
+    </div>
+    <div class="sidebar">
+      <div class="logo">
+        <i class="bx bx-menu menu-icon"></i>
+        <span class="logo-name">Enterprise Jose</span>
+      </div>
+
+      <div class="sidebar-content">
+        <ul class="lists">
+          <li class="list">
+            <a href="dashboard.html" class="nav-link">
+              <i class="bx bx-home-alt icon"></i>
+              <span class="link">Dashboard</span>
+            </a>
+          </li>
+          <li class="list">
+            <a href="listar.html" class="nav-link">
+              <i class='bx bxs-user-circle icon'></i>
+              <span class="link">Usuarios</span>
+            </a>
+          </li>
+
+
+
+        </ul>
+
+        <div class="bottom-cotent">
+          <li class="list">
+            <button href="index.html" class="btn btn-outline-primary" onclick="salir()">
+              <i class="bx bx-log-out icon"></i>
+              <span class="link">Salir</span>
+            </button>
+          </li>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="overlay"></section>
+
+  <div class="wraper mt-5 container text-center">
+    <div class="container p-4">
+      <div class="card-header">
+        <h1>Listado de Usuarios<i class='bx bxs-user-plus ml-5' type="button" id="añadirUsuarios"
+            onclick="crearUsuario()"></i></h1>
+      </div>
+      <div class="card-body">
+        <table id="tableUsuarios" class="table table-hover table-striped ">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Edad</th>
+              <th scope="col">Rol</th>
+              <th scope="col">Ciudad de Residencia</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <section class="model">
+    <div class="modal__container">
+      <div class="container-fluid">
+        <div class="wraper  col-12 d-flex justify-content-center align-items-center">
+          <div class="card-body">
+            <div id="BoxModal">
+              <i class='bx bx-chevron-right' style='color:#f9f4f4'></i>
+            </div>
+            <div class="d-flex flex-row-reverse" id="model">
+              <button class="btn btn-outline-danger" href="#" id="modal__close">Salir</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="model2">
+    <div class="modal__container2">
+      <div class="container-fluid">
+        <div class="wraper  col-12 d-flex justify-content-center align-items-center">
+          <div class="card-body">
+            <div id="BoxModal2" class="table">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger fs-6 text-decoration-none col-6 m-0 rounded-0"
+            id="deleteConfirm">Eliminar</button>
+          <button type="button" class="btn btn-outline-success fs-6 text-decoration-none col-6 m-0 "
+            data-bs-dismiss="modal" id="modal__close2">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="model3">
+    <div class="modal__container3">
+      <div class="container-fluid">
+        <div class="wraper  col-12 d-flex justify-content-center align-items-center">
+          <div class="card-body">
+            <div id="BoxModal3">
+              <div class="card-header mb-3">
+                <h1>Editar usuario</h1>
+              </div>
+              <form id="formularioEditar">
+              
+                <div class="row mb-3">
+                <div class="formulario__grupo col-md-6" id="grupo__nombre">
+                    <div class="formulario__grupo-input form-floating mb-3 mb-md-0">
+                      <input class="formulario__input form-control" name="id" id="idEditar" type="hidden"/>
+                  <label for="">Nombre</label>
+                        <input class="formulario__input form-control" name="nombreEditar" id="nombreEditar" type="text" placeholder="Nombre Completo"/>
+                        <i class="formulario__validacion-estado fas fa-times-circle" name="inormal"></i>
+                    </div>
+                        <p class="formulario__input-error">El nombre no puede tener caracteres especiales</p>
+                </div>
+                <div class="formulario__grupo col-md-6" id="grupo__edad">
+                    <div class="formulario__grupo-input form-floating mb-3 mb-md-0">
+                  <label for="">Edad</label>
+                        <input class="formulario__input form-control" name="edadEditar" id="edadEditar" type="number" placeholder="edad"/>
+                        <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                    </div>
+                        <p class="formulario__input-error">la edad tiene que ser mayor a cero</p>
+                </div>
+            </div>
+            <div class="formulario__grupo mb-3" id="grupo__ciudadResidencia">
+                <div class="formulario__grupo-input form-floating">
+                  <label for="">Ciudad de Residencia</label>
+                    <input class="formulario__input form-control" name="ciudadResidenciaEditar" id="ciudadResidenciaEditar" type="text" placeholder="Ciudad de residencia"/>
+                    <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                </div>
+                    <p class="formulario__input-error">La residencia no puede tener caracteres especiales</p>
+            </div>
+            <div class="formulario__grupo mb-3" id="grupo__nombreUsuario">
+                <div class="formulario__grupo-input form-floating">
+                  <label for="">Usuario</label>
+                    <input class="formulario__input form-control" name="nombreUsuarioEditar" id="nombreUsuarioEditar" type="text" placeholder="Nombre de Usuario"/>
+                    <i class="formulario__validacion-estado fas fa-times-circle mt-2"></i>
+                </div>
+                    <p class="formulario__input-error">El usuario tiene que ser de 4-16 dígitos y solo puede contener numeros, letras y guion bajo</p>
+            </div>
+            <div class="formulario__grupo mb-3" id="grupo__rol">
+                <div class="formulario__grupo-input form-floating">
+                  <div class="form-floating mb-3">
+                    <label for="">Rol</label>
+                    <select name="" id="rolEditar" class="form-control">
+                      <option value="">Rol</option>
+                      <option value="admin">Admin</option>
+                      <option value="user">User</option>
+                    </select>
+                </div>
+            </div>
+              </div>
+              <div class="modal-footer p-0">
+                <button type="button" class="btn btn-outline-success" id="editConfirm">Editar</button>
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" id="modal__close3">Cancelar</button>
+              </div>
+            </form>
+
+      </div>
+    </div>
+  </section>
+  <section class="model4">
+    <div class="modal__container4">
+      <div class="container-fluid">
+        <div class="card-header mb-3">
+          <h1>Crear usuario</h1>
+        </div>
+        <form id="formularioCrear">
+
+          <div class="row mb-3">
+            <div class="formulario__grupo col-md-6" id="grupo__nombre">
+              <div class="formulario__grupo-input form-floating mb-3 mb-md-0">
+                <input class="formulario__input form-control" name="nombreCrear" id="nombreCrear" type="text"
+                  placeholder="Nombre Completo" />
+                <i class="formulario__validacion-estado fas fa-times-circle" name="inormal"></i>
+              </div>
+              <p class="formulario__input-error">El nombre no puede tener caracteres especiales</p>
+            </div>
+            <div class="formulario__grupo col-md-6" id="grupo__edad">
+              <div class="formulario__grupo-input form-floating mb-3 mb-md-0">
+                <input class="formulario__input form-control" name="edadCrear" id="edadCrear" type="number"
+                  placeholder="edad" />
+                <i class="formulario__validacion-estado fas fa-times-circle"></i>
+              </div>
+              <p class="formulario__input-error">la edad tiene que ser mayor a cero</p>
+            </div>
+          </div>
+          <div class="formulario__grupo mb-3" id="grupo__ciudadResidencia">
+            <div class="formulario__grupo-input form-floating">
+              <input class="formulario__input form-control" name="ciudadResidenciaCrear" id="ciudadResidenciaCrear"
+                type="text" placeholder="Ciudad de residencia" />
+              <i class="formulario__validacion-estado fas fa-times-circle"></i>
+            </div>
+            <p class="formulario__input-error">La residencia no puede tener caracteres especiales</p>
+          </div>
+          <div class="formulario__grupo mb-3" id="grupo__nombreUsuario">
+            <div class="formulario__grupo-input form-floating">
+              <input class="formulario__input form-control" name="nombreUsuarioCrear" id="nombreUsuarioCrear"
+                type="text" placeholder="Nombre de Usuario" />
+              <i class="formulario__validacion-estado fas fa-times-circle mt-2"></i>
+            </div>
+            <p class="formulario__input-error">El usuario tiene que ser de 4-16 dígitos y solo puede contener numeros,
+              letras y guion bajo</p>
+          </div>
+          <div class="formulario__grupo mb-3" id="grupo__rol">
+            <div class="formulario__grupo-input form-floating">
+              <div class="form-floating mb-3">
+                <select name="" id="rolCrear" class="form-control">
+                  <option value="">Rol</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="formulario__grupo col-md-6" id="grupo__password">
+                <div class="formulario__grupo-input form-floating">
+                  <input class="formulario__input form-control" name="passwordCrear" id="passwordCrear" type="password"
+                    placeholder="Contraseña" />
+                  <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                </div>
+                <p class="formulario__input-error">La contraseña tiene que ser de 4 a 12 dígitos</p>
+              </div>
+              <div class="formulario__grupo col-md-6" id="grupo__password2">
+                <div class="formulario__grupo-input form-floating">
+                  <input class="formulario__input form-control" name="password2Crear" id="password2" type="password"
+                    placeholder="Confirmar Contraseña" />
+                  <i class="formulario__validacion-estado fas fa-times-circle"></i>
+                </div>
+                <p class="formulario__input-error">Las contraseñas tienen que ser igual</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer p-0">
+            <button type="button" class="btn btn-outline-success" id="createConfirm">Crear</button>
+            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
+              id="modal__close4">Cancelar</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <script src="../public/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
